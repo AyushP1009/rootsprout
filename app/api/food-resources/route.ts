@@ -1,62 +1,59 @@
 // app/api/food-resources/route.ts
-// Next.js 14 App Router API route
 // GET  /api/food-resources         — list all active resources (with optional filters)
 // GET  /api/food-resources?type=PANTRY&zip=28216  — filtered results
 
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/db";
+import { foodResources } from "@/lib/food-resources-data";
+
 // ─────────────────────────────────────────────────────────────
 // GET /api/food-resources
 // Query params:
-//   type     — ResourceType enum value (e.g. FOOD_BANK, PANTRY)
-//   zip      — filter by zip code
-//   kids     — "true" to show only resources that serve children
-//   q        — free-text search on name, description, neighborhoods
+//   type  — resourceType value (FOOD_BANK, PANTRY, MEAL_PROGRAM)
+//   zip   — filter by zip code
+//   kids  — "true" to show only resources that serve children
+//   q     — free-text search on name, description
 // ─────────────────────────────────────────────────────────────
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
 
-    const type = searchParams.get("type") as string | null;
+    const type = searchParams.get("type");
     const zip = searchParams.get("zip");
     const kids = searchParams.get("kids");
-    const q = searchParams.get("q");
+    const q = searchParams.get("q")?.toLowerCase();
 
-    // Build a dynamic Prisma WHERE clause
-    const where: any = {
-      isActive: true, // only surface verified, active locations
-      ...(type && { resourceType: type }),
-      ...(zip && { zip }),
-      ...(kids === "true" && { servesChildren: true }),
-      // Free-text search across name, description, and neighborhoods
-      ...(q && {
-        OR: [
-          { name: { contains: q, mode: "insensitive" } },
-          { description: { contains: q, mode: "insensitive" } },
-          { servesNeighborhoods: { contains: q, mode: "insensitive" } },
-          { address: { contains: q, mode: "insensitive" } },
-        ],
-      }),
-    };
+    let results = foodResources.filter((r) => r.isActive);
 
-    const resources = await prisma.foodResource.findMany({
-      where,
-      orderBy: [
-        { name: "asc" }, // alphabetical by default
-      ],
-      include: {
-        operatingHours: {
-          orderBy: { dayOfWeek: "asc" },
-        },
-      },
-    });
+    if (type) {
+      results = results.filter((r) => r.resourceType === type);
+    }
 
-    // Return a clean JSON response with metadata
+    if (zip) {
+      results = results.filter((r) => r.zip === zip);
+    }
+
+    if (kids === "true") {
+      results = results.filter((r) => r.servesChildren);
+    }
+
+    if (q) {
+      results = results.filter(
+        (r) =>
+          r.name.toLowerCase().includes(q) ||
+          r.description?.toLowerCase().includes(q) ||
+          r.address.toLowerCase().includes(q) ||
+          r.city.toLowerCase().includes(q)
+      );
+    }
+
+    // Sort alphabetically by name
+    results.sort((a, b) => a.name.localeCompare(b.name));
+
     return NextResponse.json(
       {
         success: true,
-        count: resources.length,
-        data: resources,
+        count: results.length,
+        data: results,
       },
       { status: 200 }
     );
@@ -67,52 +64,6 @@ export async function GET(request: NextRequest) {
         success: false,
         message: "Something went wrong. Please try again.",
       },
-      { status: 500 }
-    );
-  }
-}
-
-// ─────────────────────────────────────────────────────────────
-// POST /api/food-resources  (Admin only — add a new resource)
-// In production, protect this with an auth middleware.
-// ─────────────────────────────────────────────────────────────
-export async function POST(request: NextRequest) {
-  try {
-    const body = await request.json();
-
-    // Basic required-field validation
-    const required = ["name", "slug", "resourceType", "address", "zip"];
-    for (const field of required) {
-      if (!body[field]) {
-        return NextResponse.json(
-          { success: false, message: `Missing required field: ${field}` },
-          { status: 400 }
-        );
-      }
-    }
-
-    const resource = await prisma.foodResource.create({
-      data: {
-        ...body,
-        operatingHours: body.operatingHours
-          ? { create: body.operatingHours }
-          : undefined,
-      },
-      include: { operatingHours: true },
-    });
-
-    return NextResponse.json({ success: true, data: resource }, { status: 201 });
-  } catch (error: any) {
-    // Handle unique constraint violation on slug
-    if (error.code === "P2002") {
-      return NextResponse.json(
-        { success: false, message: "A resource with this slug already exists." },
-        { status: 409 }
-      );
-    }
-    console.error("[API /food-resources POST] Error:", error);
-    return NextResponse.json(
-      { success: false, message: "Something went wrong." },
       { status: 500 }
     );
   }

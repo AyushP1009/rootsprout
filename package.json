@@ -2,16 +2,14 @@
   "name": "rootsprout",
   "version": "0.1.0",
   "private": true,
-"scripts": {
-  "build": "prisma generate && next build",
-  "postinstall": "prisma generate",
-  "dev": "next dev",
-  "build": "next build",
-  "start": "next start",
-  "lint": "next lint"
-},
+  "scripts": {
+    "build": "next build",
+    "postinstall": "prisma generate",
+    "dev": "next dev",
+    "start": "next start",
+    "lint": "next lint"
+  },
   "dependencies": {
-    "@prisma/client": "^5.22.0",
     "next": "16.2.1",
     "react": "19.2.4",
     "react-dom": "19.2.4"
@@ -23,7 +21,6 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.1",
-    "prisma": "^5.22.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
