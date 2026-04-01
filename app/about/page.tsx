@@ -48,7 +48,7 @@ export default function AboutPage() {
             </p>
             <div className="about-program-pills">
               <span className="about-program-pill">🎓 Emerging Leaders Program</span>
-              <span class="about-program-pill">👥 PAL Jayden's Group</span>
+              <span className="about-program-pill">👥 PAL Jayden's Group</span>
               <span className="about-program-pill">🏙️ Charlotte, NC</span>
               <span className="about-program-pill">🌱 Group London</span>
             </div>
