@@ -206,7 +206,11 @@ footer .footer-note { font-size: .78rem; opacity: .5; margin-top: 20px; }
    ABOUT PAGE — Group London (V2)
 ═══════════════════════════════════════════════════ */
 .about-hero {
-  background: linear-gradient(135deg, var(--leaf) 0%, #1B4332 100%);
+  background: 
+    url('/london.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   padding: 56px 24px 80px;
 }
 .about-hero-inner { max-width: 1100px; margin: 0 auto; }
@@ -216,7 +220,7 @@ footer .footer-note { font-size: .78rem; opacity: .5; margin-top: 20px; }
   font-weight: 900; color: var(--cream); margin-bottom: 10px;
 }
 .about-hero p {
-  font-size: 1.05rem; color: rgba(251,247,240,.75);
+  font-size: 1.05rem; color: rgb(255, 255, 255);
   max-width: 520px; line-height: 1.6;
 }
 
@@ -240,7 +244,7 @@ footer .footer-note { font-size: .78rem; opacity: .5; margin-top: 20px; }
 .about-photo-frame {
   border-radius: var(--radius-md);
   overflow: hidden;
-  background: linear-gradient(135deg, var(--sky) 0%, #D8F3DC 100%);
+  background: linear-gradient(135deg, var(--sky) 0%, #ffffff 100%);
   border: 3px solid var(--sky);
   box-shadow: var(--shadow-sm);
   aspect-ratio: 4/3;

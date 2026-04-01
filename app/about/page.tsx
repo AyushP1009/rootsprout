@@ -20,14 +20,9 @@ export default function AboutPage() {
 
           {/* Left: group photo */}
           <div className="about-photo-frame">
-            {/*
-              ──────────────────────────────────────────────
-              TO ADD YOUR GROUP PHOTO:
-              1. Drop your photo in the public folder and name it group-photo.jpg
-              2. Delete the placeholder div below.
-              3. Uncomment the img tag below!
-              ──────────────────────────────────────────────
-            */}
+            {
+              
+            }
             
             {<img src="/group-photo.jpg" alt="Group London" /> }
             <div className="about-photo-caption"></div>
@@ -41,7 +36,7 @@ export default function AboutPage() {
               We're a team of students in <strong>PAL Jayden's group</strong>, participating in the <strong>Emerging Leaders program</strong> at our university. We came together around one shared belief: that where you live should never decide whether you eat well.
             </p>
             <p>
-              Charlotte has real food deserts, neighborhoods where families, especially young children, struggle to find fresh and affordable food. We built RootSprout to <strong>raise awareness of this issue</strong> and give our community real tools to take action.
+              Charlotte has real food deserts, neighborhoods where families, especially young children, struggle to find fresh and affordable food. We built Little Green Thumb to <strong>raise awareness of this issue</strong> and give our community real tools to take action.
             </p>
             <p>
               This site is our Emerging Leaders project, but more than that, it's our commitment to the city we call home.
@@ -62,7 +57,7 @@ export default function AboutPage() {
         <div className="about-quote-inner">
           <div className="about-quote-mark">"</div>
           <div className="about-quote-text">
-            We didn't build this website to get a grade. We built it because <em>real kids in our city</em> go to bed hungry — and we think that's something worth fighting for.
+            We didn't build this website to get a grade. We built it because <em>real kids in our city</em> go to bed hungry and we think that's something worth fighting for.
             <div style={{ fontSize: ".85rem", fontWeight: "500", color: "rgba(251,247,240,.55)", marginTop: "12px", fontFamily: "var(--font-sans)" }}>
               — Group London, Emerging Leaders Program
             </div>
@@ -75,19 +70,19 @@ export default function AboutPage() {
         <div className="section-inner">
           <div className="section-header">
             <div className="section-label">Our purpose</div>
-            <h2 className="section-title">Why we created RootSprout</h2>
+            <h2 className="section-title">Why we created Little Green Thumb</h2>
             <p className="section-sub">Three goals guided every decision we made when building this platform.</p>
           </div>
           <div className="about-values">
             <div className="about-value-card">
               <span className="val-icon">📢</span>
               <div className="val-title">Spread awareness</div>
-              <div className="val-body">Most people don't realize how many families right here in Charlotte lack access to healthy food. We want to change that — starting with this website.</div>
+              <div className="val-body">Most people don't realize how many families right here in Charlotte lack access to healthy food. We want to change that, starting with this website.</div>
             </div>
             <div className="about-value-card">
               <span className="val-icon">🗺️</span>
               <div className="val-title">Connect families to help</div>
-              <div className="val-body">Awareness isn't enough. We built the Food Locator so that any parent in Charlotte can find a food bank or pantry near them in seconds — no searching required.</div>
+              <div className="val-body">Awareness isn't enough. We built the Food Locator so that any parent in Charlotte can find a food bank or pantry near them in seconds, no searching required.</div>
             </div>
             <div className="about-value-card">
               <span className="val-icon">🌱</span>

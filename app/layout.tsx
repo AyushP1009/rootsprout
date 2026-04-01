@@ -16,7 +16,7 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "RootSprout — Grow & Nourish Charlotte",
+  title: "Little Green Thumb — Grow & Nourish Charlotte",
   description: "A university leadership initiative addressing food insecurity in Charlotte, NC.",
 };
 
@@ -31,7 +31,7 @@ export default function RootLayout({
         {/* Navigation Bar */}
         <nav className="nav">
           <Link href="/" className="nav-logo">
-            <span>🌱</span> RootSprout
+            <span>🌱</span> Little Green Thumb
           </Link>
           <div className="nav-links-wrap" id="navLinks">
             <ul className="nav-links">
@@ -51,7 +51,7 @@ export default function RootLayout({
 
         {/* Footer */}
         <footer>
-          <div className="footer-logo">🌱 RootSprout</div>
+          <div className="footer-logo">🌱 Little Green Thumb</div>
           <p>Part of Emerging Leaders Project.</p>
           <div className="footer-note">
             Resource information is kept as up-to-date as possible. © 2026 RootSprout Initiative.
