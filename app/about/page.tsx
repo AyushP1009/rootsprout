@@ -33,10 +33,10 @@ export default function AboutPage() {
             <span className="team-badge">👋 Who We Are</span>
             <h2>We are Group London and this is our project.</h2>
             <p>
-              We're a team of students in <strong>PAL Jayden's group</strong>, participating in the <strong>Emerging Leaders program</strong> at our university. We came together around one shared belief: that where you live should never decide whether you eat well.
+              We're a team of students in <strong>PAL Jayden's group</strong>, participating in the <strong>Emerging Leaders program</strong> at UNC Charlotte. We came together around one shared belief: that where you live should never decide whether you eat well.
             </p>
             <p>
-              Charlotte has real food deserts, neighborhoods where families, especially young children, struggle to find fresh and affordable food. We built Little Green Thumb to <strong>raise awareness of this issue</strong> and give our community real tools to take action.
+              Charlotte has real food deserts, neighborhoods where families, especially young children, struggle to find fresh and affordable food. We built Little Green Thumbs to <strong>raise awareness of this issue</strong> and give our community real tools to take action.
             </p>
             <p>
               This site is our Emerging Leaders project, but more than that, it's our commitment to the city we call home.
@@ -70,7 +70,7 @@ export default function AboutPage() {
         <div className="section-inner">
           <div className="section-header">
             <div className="section-label">Our purpose</div>
-            <h2 className="section-title">Why we created Little Green Thumb</h2>
+            <h2 className="section-title">Why we created Little Green Thumbs</h2>
             <p className="section-sub">Three goals guided every decision we made when building this platform.</p>
           </div>
           <div className="about-values">
@@ -87,7 +87,7 @@ export default function AboutPage() {
             <div className="about-value-card">
               <span className="val-icon">🌱</span>
               <div className="val-title">Teach long-term solutions</div>
-              <div className="val-body">The Grow Your Own hub teaches families and kids how to grow their own food at home — a skill that lasts a lifetime and doesn't depend on a pantry being nearby.</div>
+              <div className="val-body">The Grow Your Own hub teaches families and kids how to grow their own food at home, a skill that lasts a lifetime and doesn't depend on a pantry being nearby.</div>
             </div>
             <div className="about-value-card">
               <span className="val-icon">💡</span>
@@ -111,7 +111,7 @@ export default function AboutPage() {
           </div>
           <div className="about-stat-card">
             <div className="stat-num">1 in 7</div>
-            <div className="stat-lbl">Children in Mecklenburg County face food insecurity — that's why we're here</div>
+            <div className="stat-lbl">Children in Mecklenburg County face food insecurity, that's why we're here</div>
           </div>
         </div>
       </div>
