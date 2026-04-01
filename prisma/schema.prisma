@@ -11,7 +11,7 @@ model FoodResource {
   id                Int              @id @default(autoincrement())
   name              String           
   slug              String           @unique 
-  resourceType      String           
+  resourceType      String           @default("FOOD_BANK")         
   address           String
   city              String           @default("Charlotte")
   state             String           @default("NC")
@@ -87,3 +87,4 @@ model GrowStep {
 
   @@index([growModuleId])
 }
+

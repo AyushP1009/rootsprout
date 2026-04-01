@@ -5,8 +5,6 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
-import { ResourceType } from "@prisma/client";
-
 // ─────────────────────────────────────────────────────────────
 // GET /api/food-resources
 // Query params:
@@ -19,7 +17,7 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
 
-    const type = searchParams.get("type") as ResourceType | null;
+    const type = searchParams.get("type") as string | null;
     const zip = searchParams.get("zip");
     const kids = searchParams.get("kids");
     const q = searchParams.get("q");
