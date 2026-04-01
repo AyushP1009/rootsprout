@@ -1,0 +1,1661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RootSprout — Grow & Nourish Charlotte</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ═══════════════════════════════════════════════════
+       ROOT DESIGN TOKENS
+    ═══════════════════════════════════════════════════ */
+    :root {
+      --soil:      #2C1A0E;
+      --bark:      #4A2E1A;
+      --clay:      #8B4513;
+      --harvest:   #D4A017;
+      --harvest-lt:#F5D76E;
+      --leaf:      #3A7D44;
+      --leaf-lt:   #74C69D;
+      --sky:       #E8F4F0;
+      --cream:     #FBF7F0;
+      --white:     #FFFFFF;
+      --text-dark: #1C1208;
+      --text-mid:  #4A3728;
+      --text-soft: #7A6555;
+      --font-serif: 'Fraunces', Georgia, serif;
+      --font-sans:  'DM Sans', system-ui, sans-serif;
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --shadow-sm: 0 2px 8px rgba(44,26,14,.08);
+      --shadow-md: 0 8px 32px rgba(44,26,14,.12);
+      --shadow-lg: 0 20px 60px rgba(44,26,14,.16);
+    }
+
+    /* ═══════════════════════════════════════════════════
+       RESET & BASE
+    ═══════════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--cream);
+      color: var(--text-dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; border: none; font-family: inherit; }
+
+    /* ═══════════════════════════════════════════════════
+       NAVBAR
+    ═══════════════════════════════════════════════════ */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--soil);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px; height: 64px;
+      box-shadow: 0 2px 16px rgba(0,0,0,.25);
+    }
+    .nav-logo {
+      font-family: var(--font-serif);
+      font-size: 1.4rem; font-weight: 700;
+      color: var(--harvest-lt);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .nav-logo span { font-size: 1.6rem; }
+    .nav-links {
+      display: flex; gap: 8px; list-style: none;
+    }
+    .nav-links a {
+      color: rgba(255,255,255,.8);
+      font-size: .875rem; font-weight: 500;
+      padding: 8px 14px; border-radius: var(--radius-sm);
+      transition: background .2s, color .2s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      background: rgba(255,255,255,.12); color: #fff;
+    }
+    .nav-cta {
+      background: var(--harvest); color: var(--soil);
+      font-weight: 600; font-size: .875rem;
+      padding: 9px 18px; border-radius: 40px;
+      transition: transform .15s, box-shadow .15s;
+    }
+    .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(212,160,23,.4); }
+
+    /* Mobile nav toggle */
+    .nav-toggle { display: none; background: transparent; padding: 6px; }
+    .nav-toggle svg { display: block; }
+    @media (max-width: 640px) {
+      .nav-links-wrap { display: none; }
+      .nav-links-wrap.open {
+        display: block; position: absolute;
+        top: 64px; left: 0; right: 0;
+        background: var(--soil);
+        padding: 8px 16px 16px;
+      }
+      .nav-links { flex-direction: column; }
+      .nav-toggle { display: block; }
+      .nav-cta { display: none; }
+    }
+
+    /* ═══════════════════════════════════════════════════
+       PAGE SECTIONS (show/hide via JS)
+    ═══════════════════════════════════════════════════ */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* ═══════════════════════════════════════════════════
+       HERO
+    ═══════════════════════════════════════════════════ */
+    .hero {
+      position: relative; overflow: hidden;
+      min-height: 88vh;
+      background: var(--soil);
+      display: flex; align-items: center;
+    }
+    /* Decorative organic shapes */
+    .hero-bg {
+      position: absolute; inset: 0; pointer-events: none;
+      overflow: hidden;
+    }
+    .hero-blob {
+      position: absolute; border-radius: 50%;
+      opacity: .18; filter: blur(60px);
+    }
+    .hero-blob-1 { width: 500px; height: 500px; background: var(--leaf); top: -100px; right: -100px; }
+    .hero-blob-2 { width: 300px; height: 300px; background: var(--harvest); bottom: 0; left: -80px; }
+
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 1100px; margin: 0 auto;
+      padding: 80px 24px;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: center;
+    }
+    @media (max-width: 768px) {
+      .hero-content { grid-template-columns: 1fr; gap: 40px; }
+    }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(74,200,130,.15); border: 1px solid rgba(74,200,130,.3);
+      color: var(--leaf-lt);
+      font-size: .8rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+      padding: 6px 14px; border-radius: 40px;
+      margin-bottom: 20px;
+    }
+    .hero-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      font-weight: 900; line-height: 1.1;
+      color: var(--cream);
+      margin-bottom: 20px;
+    }
+    .hero-title .accent { color: var(--harvest-lt); font-style: italic; }
+    .hero-desc {
+      font-size: 1.1rem; color: rgba(251,247,240,.75);
+      line-height: 1.7; margin-bottom: 36px; max-width: 480px;
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; }
+    .btn-primary {
+      background: var(--leaf); color: #fff;
+      font-size: 1rem; font-weight: 600;
+      padding: 15px 28px; border-radius: 40px;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: transform .15s, box-shadow .15s, background .2s;
+      box-shadow: 0 4px 20px rgba(58,125,68,.35);
+    }
+    .btn-primary:hover { background: #2d6a3a; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(58,125,68,.45); }
+    .btn-secondary {
+      background: var(--harvest); color: var(--soil);
+      font-size: 1rem; font-weight: 700;
+      padding: 15px 28px; border-radius: 40px;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: transform .15s, box-shadow .15s;
+      box-shadow: 0 4px 20px rgba(212,160,23,.3);
+    }
+    .btn-secondary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(212,160,23,.4); }
+
+    /* Hero illustration panel */
+    .hero-visual {
+      display: flex; justify-content: center; align-items: center;
+    }
+    .hero-illustration {
+      width: 100%; max-width: 400px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      backdrop-filter: blur(10px);
+    }
+    .hero-illustration .plant-emoji { font-size: 7rem; text-align: center; display: block; line-height: 1; margin-bottom: 16px; filter: drop-shadow(0 8px 20px rgba(0,0,0,.3)); }
+    .hero-stats {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 12px; margin-top: 20px;
+    }
+    .hero-stat {
+      background: rgba(255,255,255,.08);
+      border-radius: var(--radius-sm);
+      padding: 14px;
+      text-align: center;
+    }
+    .hero-stat .num { font-family: var(--font-serif); font-size: 1.8rem; font-weight: 900; color: var(--harvest-lt); line-height: 1; }
+    .hero-stat .lbl { font-size: .75rem; color: rgba(255,255,255,.6); margin-top: 4px; }
+
+    /* Mission strip */
+    .mission-strip {
+      background: var(--leaf);
+      padding: 20px 24px;
+      display: flex; align-items: center; justify-content: center;
+      gap: 32px; flex-wrap: wrap;
+    }
+    .mission-item { display: flex; align-items: center; gap: 10px; color: #fff; font-size: .9rem; font-weight: 500; }
+    .mission-item span { font-size: 1.3rem; }
+
+    /* ═══════════════════════════════════════════════════
+       SECTION COMMONS
+    ═══════════════════════════════════════════════════ */
+    .section { padding: 72px 24px; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-size: .75rem; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--leaf);
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800; line-height: 1.2;
+      color: var(--text-dark); margin-bottom: 14px;
+    }
+    .section-sub {
+      font-size: 1.05rem; color: var(--text-soft);
+      max-width: 560px; line-height: 1.7;
+    }
+    .section-header { margin-bottom: 48px; }
+
+    /* ═══════════════════════════════════════════════════
+       CTA CARDS (Homepage bottom section)
+    ═══════════════════════════════════════════════════ */
+    .cta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    @media (max-width: 640px) { .cta-grid { grid-template-columns: 1fr; } }
+    .cta-card {
+      border-radius: var(--radius-lg);
+      padding: 40px 36px;
+      position: relative; overflow: hidden;
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .cta-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .cta-card-grow { background: var(--leaf); }
+    .cta-card-find { background: var(--soil); }
+    .cta-card .card-icon { font-size: 3.5rem; margin-bottom: 16px; display: block; }
+    .cta-card .card-title {
+      font-family: var(--font-serif);
+      font-size: 1.7rem; font-weight: 800;
+      color: #fff; line-height: 1.2; margin-bottom: 10px;
+    }
+    .cta-card .card-desc { font-size: .95rem; color: rgba(255,255,255,.8); line-height: 1.6; margin-bottom: 24px; }
+    .cta-card .card-btn {
+      background: rgba(255,255,255,.2); color: #fff;
+      border: 1.5px solid rgba(255,255,255,.4);
+      padding: 11px 22px; border-radius: 40px;
+      font-size: .9rem; font-weight: 600;
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: background .15s;
+    }
+    .cta-card .card-btn:hover { background: rgba(255,255,255,.3); }
+    .cta-card-find .card-btn { background: rgba(212,160,23,.25); border-color: rgba(212,160,23,.5); }
+
+    .cta-card .bg-deco {
+      position: absolute; right: -20px; bottom: -20px;
+      font-size: 8rem; opacity: .1; pointer-events: none;
+      line-height: 1;
+    }
+
+    /* ═══════════════════════════════════════════════════
+       FOOD LOCATOR PAGE
+    ═══════════════════════════════════════════════════ */
+    .locator-hero {
+      background: linear-gradient(135deg, var(--soil) 0%, #3D2314 100%);
+      padding: 56px 24px 40px;
+    }
+    .locator-hero-inner { max-width: 1100px; margin: 0 auto; }
+    .locator-hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 900; color: var(--cream);
+      margin-bottom: 10px;
+    }
+    .locator-hero p { font-size: 1.05rem; color: rgba(251,247,240,.7); max-width: 500px; line-height: 1.6; }
+
+    /* Search + filter bar */
+    .search-bar {
+      background: var(--white);
+      border: 2px solid rgba(44,26,14,.1);
+      border-radius: var(--radius-md);
+      padding: 8px 16px;
+      display: flex; align-items: center; gap: 10px;
+      margin-top: 28px;
+      max-width: 640px;
+      box-shadow: var(--shadow-md);
+    }
+    .search-bar input {
+      flex: 1; border: none; outline: none;
+      font-family: var(--font-sans); font-size: 1rem;
+      color: var(--text-dark);
+      background: transparent;
+    }
+    .search-bar input::placeholder { color: var(--text-soft); }
+    .search-bar .search-icon { font-size: 1.1rem; opacity: .5; }
+    .search-btn {
+      background: var(--leaf); color: #fff;
+      font-weight: 600; font-size: .875rem;
+      padding: 9px 18px; border-radius: var(--radius-sm);
+      transition: background .15s;
+    }
+    .search-btn:hover { background: #2d6a3a; }
+
+    .filter-row {
+      max-width: 1100px; margin: 24px auto 0;
+      display: flex; gap: 10px; flex-wrap: wrap;
+      padding: 0 24px;
+    }
+    .filter-chip {
+      background: var(--white); border: 1.5px solid rgba(44,26,14,.15);
+      color: var(--text-mid); font-size: .82rem; font-weight: 600;
+      padding: 7px 16px; border-radius: 40px;
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .filter-chip:hover { border-color: var(--leaf); color: var(--leaf); }
+    .filter-chip.active { background: var(--leaf); color: #fff; border-color: var(--leaf); }
+
+    /* Resource cards grid */
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px; padding: 32px 24px;
+      max-width: 1100px; margin: 0 auto;
+    }
+    @media (max-width: 400px) { .resource-grid { grid-template-columns: 1fr; } }
+
+    .resource-card {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(44,26,14,.07);
+      transition: transform .2s, box-shadow .2s;
+      display: flex; flex-direction: column;
+    }
+    .resource-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+
+    .resource-card-header {
+      padding: 20px 20px 0;
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
+    }
+    .resource-type-badge {
+      font-size: .7rem; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: 4px 10px; border-radius: 40px;
+      white-space: nowrap;
+    }
+    .badge-food-bank    { background: #E8F5E9; color: #2D6A4F; }
+    .badge-pantry       { background: #FFF8E1; color: #7B5800; }
+    .badge-mobile       { background: #E3F2FD; color: #1565C0; }
+    .badge-community    { background: #F3E5F5; color: #6A1B9A; }
+    .badge-nutrition    { background: #E0F2F1; color: #00695C; }
+
+    .resource-card-body { padding: 16px 20px; flex: 1; }
+    .resource-name {
+      font-family: var(--font-serif);
+      font-size: 1.2rem; font-weight: 700; line-height: 1.3;
+      color: var(--text-dark); margin-bottom: 8px;
+    }
+    .resource-address {
+      font-size: .875rem; color: var(--text-soft);
+      display: flex; align-items: flex-start; gap: 6px;
+      margin-bottom: 10px;
+    }
+    .resource-desc {
+      font-size: .875rem; color: var(--text-mid);
+      line-height: 1.6; margin-bottom: 14px;
+    }
+
+    /* Hours mini-table */
+    .hours-section { margin-top: 12px; }
+    .hours-label {
+      font-size: .72rem; font-weight: 700; letter-spacing: .07em;
+      text-transform: uppercase; color: var(--text-soft);
+      margin-bottom: 6px;
+    }
+    .hours-list { display: flex; flex-direction: column; gap: 3px; }
+    .hours-row {
+      display: flex; justify-content: space-between;
+      font-size: .8rem; color: var(--text-mid);
+    }
+    .hours-row .day { font-weight: 600; width: 36px; }
+    .hours-row .time { color: var(--text-soft); }
+    .hours-note { font-size: .75rem; color: var(--leaf); font-style: italic; margin-top: 4px; }
+
+    /* Info pills */
+    .info-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+    .info-pill {
+      font-size: .75rem; font-weight: 500;
+      padding: 4px 10px; border-radius: 40px;
+      background: var(--sky); color: var(--leaf);
+    }
+    .info-pill.warn { background: #FFF3E0; color: #E65100; }
+
+    .resource-card-footer {
+      padding: 14px 20px 18px;
+      border-top: 1px solid rgba(44,26,14,.07);
+      display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+    }
+    .rc-link-btn {
+      font-size: .82rem; font-weight: 600;
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 7px 14px; border-radius: var(--radius-sm);
+      transition: background .15s;
+    }
+    .rc-link-btn.phone { background: var(--sky); color: var(--leaf); }
+    .rc-link-btn.web   { background: rgba(44,26,14,.06); color: var(--text-mid); }
+    .rc-link-btn:hover { filter: brightness(.95); }
+
+    /* Kids badge */
+    .kids-serves-badge {
+      margin-left: auto;
+      font-size: .72rem; font-weight: 600;
+      background: #FFF8E1; color: #7B5800;
+      padding: 4px 8px; border-radius: 6px;
+      display: flex; align-items: center; gap: 4px;
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center; padding: 80px 24px;
+      color: var(--text-soft);
+    }
+    .empty-state .icon { font-size: 4rem; margin-bottom: 16px; }
+    .empty-state h3 { font-family: var(--font-serif); font-size: 1.4rem; color: var(--text-mid); margin-bottom: 8px; }
+
+    /* ═══════════════════════════════════════════════════
+       GROW HUB PAGE
+    ═══════════════════════════════════════════════════ */
+    .grow-hero {
+      background: linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%);
+      padding: 56px 24px 40px;
+    }
+    .grow-hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 900; color: var(--cream); margin-bottom: 10px;
+    }
+    .grow-hero p { font-size: 1.05rem; color: rgba(251,247,240,.75); max-width: 520px; line-height: 1.6; }
+
+    /* Plant lifecycle (kids corner) */
+    .kids-corner {
+      background: linear-gradient(135deg, #FFFDE7 0%, #F1F8E9 100%);
+      border-radius: var(--radius-lg);
+      padding: 40px 32px;
+      margin-bottom: 48px;
+      border: 2px solid rgba(255,193,7,.3);
+      position: relative; overflow: hidden;
+    }
+    .kids-corner::before {
+      content: '🌻';
+      position: absolute; right: 20px; top: 16px;
+      font-size: 3rem; opacity: .2;
+    }
+    .kids-corner-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--harvest); color: var(--soil);
+      font-size: .75rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+      padding: 5px 12px; border-radius: 40px; margin-bottom: 14px;
+    }
+    .kids-corner h2 {
+      font-family: var(--font-serif);
+      font-size: 1.8rem; font-weight: 900;
+      color: var(--soil); margin-bottom: 8px;
+    }
+    .kids-corner p { color: var(--text-mid); line-height: 1.7; max-width: 540px; margin-bottom: 28px; }
+
+    /* Lifecycle stages */
+    .lifecycle {
+      display: flex; align-items: center; gap: 0;
+      flex-wrap: nowrap; overflow-x: auto;
+      padding-bottom: 8px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .lifecycle::-webkit-scrollbar { height: 4px; }
+    .lifecycle::-webkit-scrollbar-thumb { background: rgba(44,26,14,.15); border-radius: 4px; }
+
+    .lifecycle-stage {
+      flex: 0 0 120px; text-align: center;
+      padding: 16px 8px;
+      background: #fff; border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: border-color .2s, transform .15s;
+    }
+    .lifecycle-stage:hover { border-color: var(--harvest); transform: translateY(-2px); }
+    .lifecycle-stage.active { border-color: var(--leaf); background: var(--sky); }
+    .lifecycle-stage .stage-emoji { font-size: 2.2rem; display: block; margin-bottom: 8px; }
+    .lifecycle-stage .stage-name { font-size: .78rem; font-weight: 700; color: var(--text-mid); }
+    .lifecycle-arrow { flex: 0 0 24px; text-align: center; font-size: 1.2rem; color: var(--leaf); opacity: .5; }
+
+    .stage-detail {
+      margin-top: 20px; padding: 20px;
+      background: #fff; border-radius: var(--radius-md);
+      border-left: 4px solid var(--leaf);
+      box-shadow: var(--shadow-sm);
+    }
+    .stage-detail h3 { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 700; color: var(--text-dark); margin-bottom: 6px; }
+    .stage-detail p { font-size: .9rem; color: var(--text-mid); line-height: 1.7; }
+
+    /* Grow module cards */
+    .grow-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    .grow-card {
+      background: var(--white);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(44,26,14,.07);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .grow-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+
+    .grow-card-thumb {
+      height: 140px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 5rem;
+      background: linear-gradient(135deg, var(--sky) 0%, #D8F3DC 100%);
+    }
+    .grow-card-body { padding: 20px; }
+    .grow-card-meta {
+      display: flex; gap: 8px; align-items: center;
+      margin-bottom: 10px;
+    }
+    .diff-badge {
+      font-size: .72rem; font-weight: 700; padding: 3px 9px;
+      border-radius: 40px; letter-spacing: .04em;
+    }
+    .diff-easy   { background: #E8F5E9; color: #2E7D32; }
+    .diff-medium { background: #FFF8E1; color: #F57F17; }
+    .diff-hard   { background: #FCE4EC; color: #B71C1C; }
+    .container-badge {
+      font-size: .72rem; font-weight: 600;
+      background: var(--sky); color: var(--leaf);
+      padding: 3px 9px; border-radius: 40px;
+    }
+    .grow-card-name {
+      font-family: var(--font-serif);
+      font-size: 1.25rem; font-weight: 800;
+      color: var(--text-dark); margin-bottom: 8px;
+    }
+    .grow-card-desc {
+      font-size: .875rem; color: var(--text-mid);
+      line-height: 1.6; margin-bottom: 16px;
+    }
+    .grow-card-stats {
+      display: flex; gap: 16px;
+      padding-top: 14px; border-top: 1px solid rgba(44,26,14,.07);
+      font-size: .8rem; color: var(--text-soft);
+    }
+    .grow-card-stat { display: flex; align-items: center; gap: 5px; }
+    .grow-card-stat strong { color: var(--text-mid); }
+
+    .view-steps-btn {
+      width: 100%; margin-top: 14px;
+      background: var(--leaf); color: #fff;
+      font-weight: 600; font-size: .9rem;
+      padding: 11px; border-radius: var(--radius-sm);
+      transition: background .15s;
+    }
+    .view-steps-btn:hover { background: #2d6a3a; }
+
+    /* Steps modal / accordion */
+    .steps-container { display: none; }
+    .steps-container.open { display: block; }
+    .steps-list { margin-top: 16px; display: flex; flex-direction: column; gap: 12px; }
+    .step-item {
+      display: flex; gap: 14px; align-items: flex-start;
+      background: var(--sky); border-radius: var(--radius-sm);
+      padding: 14px 16px;
+    }
+    .step-num {
+      flex: 0 0 32px; height: 32px;
+      background: var(--leaf); color: #fff;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: .8rem; font-weight: 700;
+    }
+    .step-content .step-title { font-weight: 700; color: var(--text-dark); font-size: .9rem; margin-bottom: 4px; }
+    .step-content .step-body { font-size: .85rem; color: var(--text-mid); line-height: 1.6; }
+    .step-content .step-kids-tip {
+      margin-top: 8px;
+      background: #FFF8E1; border-left: 3px solid var(--harvest);
+      padding: 8px 10px;
+      font-size: .8rem; color: #7B5800;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    }
+    .step-content .step-kids-tip::before { content: '👧 '; }
+
+    /* ═══════════════════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════════════════ */
+    footer {
+      background: var(--soil); color: rgba(255,255,255,.6);
+      padding: 40px 24px;
+      text-align: center;
+    }
+    footer .footer-logo {
+      font-family: var(--font-serif);
+      font-size: 1.5rem; font-weight: 800;
+      color: var(--harvest-lt); margin-bottom: 10px;
+    }
+    footer p { font-size: .85rem; max-width: 560px; margin: 0 auto 8px; line-height: 1.6; }
+    footer .footer-note { font-size: .78rem; opacity: .5; margin-top: 20px; }
+
+    /* ═══════════════════════════════════════════════════
+       ANIMATIONS
+    ═══════════════════════════════════════════════════ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .animate-in { animation: fadeUp .5s ease both; }
+    .delay-1 { animation-delay: .1s; }
+    .delay-2 { animation-delay: .2s; }
+    .delay-3 { animation-delay: .3s; }
+    .delay-4 { animation-delay: .4s; }
+
+    /* ═══════════════════════════════════════════════════
+       ABOUT PAGE — Group London
+    ═══════════════════════════════════════════════════ */
+    .about-hero {
+      background: linear-gradient(135deg, var(--leaf) 0%, #1B4332 100%);
+      padding: 56px 24px 80px;
+    }
+    .about-hero-inner { max-width: 1100px; margin: 0 auto; }
+    .about-hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 900; color: var(--cream); margin-bottom: 10px;
+    }
+    .about-hero p {
+      font-size: 1.05rem; color: rgba(251,247,240,.75);
+      max-width: 520px; line-height: 1.6;
+    }
+
+    /* ── Group intro card (photo + text, overlapping hero) ── */
+    .about-intro-card {
+      max-width: 1100px; margin: -40px auto 0;
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(44,26,14,.07);
+      padding: 40px;
+      position: relative; z-index: 10;
+      display: grid; grid-template-columns: 1fr 1.1fr;
+      gap: 48px; align-items: center;
+    }
+    @media (max-width: 768px) {
+      .about-intro-card { grid-template-columns: 1fr; gap: 28px; margin: -24px 16px 0; }
+    }
+
+    /* Photo frame — accepts real <img> or shows placeholder */
+    .about-photo-frame {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: linear-gradient(135deg, var(--sky) 0%, #D8F3DC 100%);
+      border: 3px solid var(--sky);
+      box-shadow: var(--shadow-sm);
+      aspect-ratio: 4/3;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      position: relative;
+    }
+    .about-photo-frame img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      position: absolute; inset: 0;
+    }
+    .about-photo-placeholder {
+      text-align: center; padding: 24px; color: var(--leaf);
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+    }
+    .about-photo-placeholder .ph-emoji { font-size: 3.5rem; opacity: .65; }
+    .about-photo-placeholder p { font-size: .8rem; color: var(--text-soft); line-height: 1.5; max-width: 180px; }
+    /* Photo caption ribbon */
+    .about-photo-caption {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(44,26,14,.7) 0%, transparent 100%);
+      color: #fff; font-size: .8rem; font-weight: 600;
+      padding: 28px 14px 10px; text-align: center;
+      pointer-events: none;
+    }
+
+    /* Text side */
+    .about-intro-text .team-badge {
+      display: inline-block;
+      background: var(--harvest); color: var(--soil);
+      font-size: .75rem; font-weight: 800;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: 5px 12px; border-radius: 40px; margin-bottom: 14px;
+    }
+    .about-intro-text h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 800; color: var(--text-dark);
+      line-height: 1.2; margin-bottom: 16px;
+    }
+    .about-intro-text p {
+      font-size: .95rem; color: var(--text-mid);
+      line-height: 1.8; margin-bottom: 12px;
+    }
+    /* Program info pills row */
+    .about-program-pills {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px;
+    }
+    .about-program-pill {
+      display: flex; align-items: center; gap: 6px;
+      background: var(--sky); color: var(--leaf);
+      font-size: .8rem; font-weight: 600;
+      padding: 6px 12px; border-radius: 40px;
+      border: 1px solid rgba(58,125,68,.15);
+    }
+
+    /* ── Mission quote banner ── */
+    .about-quote-banner {
+      max-width: 1100px; margin: 32px auto 0;
+      padding: 0 24px;
+    }
+    .about-quote-inner {
+      background: var(--soil);
+      border-radius: var(--radius-lg);
+      padding: 36px 40px;
+      display: flex; gap: 20px; align-items: flex-start;
+    }
+    @media (max-width: 600px) { .about-quote-inner { flex-direction: column; gap: 14px; padding: 28px 24px; } }
+    .about-quote-mark {
+      font-family: var(--font-serif);
+      font-size: 5rem; line-height: .8;
+      color: var(--harvest); flex: 0 0 auto;
+      margin-top: -8px;
+    }
+    .about-quote-text {
+      font-family: var(--font-serif);
+      font-size: clamp(1.05rem, 2.5vw, 1.3rem);
+      font-weight: 700; color: var(--cream);
+      line-height: 1.6;
+    }
+    .about-quote-text em { color: var(--harvest-lt); font-style: italic; }
+
+    /* ── Values grid ── */
+    .about-values {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 16px; margin-top: 8px;
+    }
+    @media (max-width: 480px) { .about-values { grid-template-columns: 1fr; } }
+    .about-value-card {
+      background: var(--sky);
+      border-radius: var(--radius-md);
+      padding: 22px;
+      border: 1px solid rgba(44,26,14,.07);
+    }
+    .about-value-card .val-icon { font-size: 1.6rem; margin-bottom: 8px; display: block; }
+    .about-value-card .val-title {
+      font-family: var(--font-serif);
+      font-size: 1rem; font-weight: 700;
+      color: var(--text-dark); margin-bottom: 4px;
+    }
+    .about-value-card .val-body { font-size: .82rem; color: var(--text-soft); line-height: 1.6; }
+
+    /* ── Stats row ── */
+    .about-stats-row {
+      max-width: 1100px; margin: 32px auto 0;
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 16px; padding: 0 0 72px;
+    }
+    @media (max-width: 640px) { .about-stats-row { grid-template-columns: 1fr; padding-bottom: 48px; } }
+    .about-stat-card {
+      background: var(--white); border-radius: var(--radius-md);
+      border: 1px solid rgba(44,26,14,.07); box-shadow: var(--shadow-sm);
+      padding: 28px 24px; text-align: center;
+    }
+    .about-stat-card .stat-num {
+      font-family: var(--font-serif); font-size: 2.4rem; font-weight: 900;
+      color: var(--leaf); line-height: 1; margin-bottom: 6px;
+    }
+    .about-stat-card .stat-lbl { font-size: .85rem; color: var(--text-soft); line-height: 1.5; }
+
+    /* ═══════════════════════════════════════════════════
+       LOADING SKELETON
+    ═══════════════════════════════════════════════════ */
+    .skeleton {
+      background: linear-gradient(90deg, #f0ebe4 25%, #e8e0d5 50%, #f0ebe4 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: var(--radius-sm);
+    }
+    @keyframes shimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     NAVIGATION
+═══════════════════════════════════════════ -->
+<nav class="nav">
+  <div class="nav-logo" onclick="showPage('home')" style="cursor:pointer">
+    <span>🌱</span> RootSprout
+  </div>
+  <button class="nav-toggle" onclick="toggleMobileNav()" aria-label="Menu">
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+      <rect y="3" width="22" height="2.5" rx="1.25" fill="white"/>
+      <rect y="10" width="22" height="2.5" rx="1.25" fill="white"/>
+      <rect y="17" width="22" height="2.5" rx="1.25" fill="white"/>
+    </svg>
+  </button>
+  <div class="nav-links-wrap" id="navLinks">
+    <ul class="nav-links">
+      <li><a href="#" onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
+      <li><a href="#" onclick="showPage('grow')" id="nav-grow">🌿 Grow Your Own</a></li>
+      <li><a href="#" onclick="showPage('find')" id="nav-find">🗺 Find Food</a></li>
+      <li><a href="#" onclick="showPage('about')" id="nav-about">🌻 About Us</a></li>
+    </ul>
+  </div>
+  <button class="nav-cta" onclick="showPage('find')">Find Food Near Me</button>
+</nav>
+
+<!-- ═══════════════════════════════════════════
+     PAGE: HOME
+═══════════════════════════════════════════ -->
+<div id="page-home" class="page active">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="hero-blob hero-blob-1"></div>
+      <div class="hero-blob hero-blob-2"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-text">
+        <div class="hero-eyebrow animate-in">
+          <span>🌱</span> Charlotte, NC Community Initiative
+        </div>
+        <h1 class="hero-title animate-in delay-1">
+          Every child deserves to <span class="accent">grow</span> and be <span class="accent">nourished.</span>
+        </h1>
+        <p class="hero-desc animate-in delay-2">
+          RootSprout helps Charlotte families access fresh food resources and learn to grow their own produce — right in their own homes and communities.
+        </p>
+        <div class="hero-actions animate-in delay-3">
+          <button class="btn-primary" onclick="showPage('grow')">
+            🌿 Start Growing
+          </button>
+          <button class="btn-secondary" onclick="showPage('find')">
+            🗺 Find Local Food
+          </button>
+        </div>
+      </div>
+      <div class="hero-visual animate-in delay-4">
+        <div class="hero-illustration">
+          <span class="plant-emoji">🌻</span>
+          <p style="color:rgba(255,255,255,.7); font-size:.85rem; text-align:center; margin-bottom:16px;">Serving families across Charlotte, NC</p>
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <div class="num">7+</div>
+              <div class="lbl">Food Resources Listed</div>
+            </div>
+            <div class="hero-stat">
+              <div class="num">3</div>
+              <div class="lbl">Growing Guides</div>
+            </div>
+            <div class="hero-stat">
+              <div class="num">Free</div>
+              <div class="lbl">Always & Forever</div>
+            </div>
+            <div class="hero-stat">
+              <div class="num">CLT</div>
+              <div class="lbl">Charlotte-Focused</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission strip -->
+  <div class="mission-strip">
+    <div class="mission-item"><span>🥦</span> Fight food insecurity</div>
+    <div class="mission-item"><span>👩‍🌾</span> Teach kids to grow food</div>
+    <div class="mission-item"><span>🤝</span> Connect families to help</div>
+    <div class="mission-item"><span>🏙️</span> Strengthen Charlotte communities</div>
+  </div>
+
+  <!-- CTA cards section -->
+  <section class="section" style="background: var(--white);">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-label">Two paths, one mission</div>
+        <h2 class="section-title">Where would you like to start?</h2>
+        <p class="section-sub">Whether you need food now or want to learn to grow your own, we've got you covered.</p>
+      </div>
+      <div class="cta-grid">
+        <div class="cta-card cta-card-grow" onclick="showPage('grow')">
+          <span class="card-icon">🌿</span>
+          <div class="card-title">Grow Your Own Food</div>
+          <p class="card-desc">Step-by-step guides for growing tomatoes, beans, and herbs — even in a small pot on your porch. Includes a special kid-friendly learning section!</p>
+          <button class="card-btn">Start Learning →</button>
+          <div class="bg-deco">🌱</div>
+        </div>
+        <div class="cta-card cta-card-find" onclick="showPage('find')">
+          <span class="card-icon">🏪</span>
+          <div class="card-title">Find Food Near You</div>
+          <p class="card-desc">Browse food banks, pantries, and mobile food resources right here in Charlotte, NC. No judgment. No barriers. Just help when you need it.</p>
+          <button class="card-btn">Find Resources →</button>
+          <div class="bg-deco">🥕</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About / Why section -->
+  <section class="section">
+    <div class="section-inner">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;">
+        <div>
+          <div class="section-label">Why it matters</div>
+          <h2 class="section-title">Charlotte has food deserts. We're helping change that.</h2>
+          <p style="color:var(--text-mid); line-height:1.8; margin-bottom:16px; font-size:1rem;">
+            A food desert is a neighborhood where it's hard to find affordable, healthy food nearby. Many families in Charlotte — especially in the west and north corridors — live more than a mile from a grocery store.
+          </p>
+          <p style="color:var(--text-mid); line-height:1.8; font-size:1rem;">
+            RootSprout bridges two gaps at once: teaching families to <strong>grow their own food</strong> and making it easy to <strong>find immediate help</strong> when they need it most.
+          </p>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+          <div style="background:var(--sky); border-radius:var(--radius-md); padding:28px 20px; text-align:center;">
+            <div style="font-size:2.5rem; font-family:var(--font-serif); font-weight:900; color:var(--leaf);">23%</div>
+            <div style="font-size:.85rem; color:var(--text-soft); margin-top:6px; line-height:1.5;">of Charlotte residents live in low-income, low-access food areas</div>
+          </div>
+          <div style="background:#FFF8E1; border-radius:var(--radius-md); padding:28px 20px; text-align:center;">
+            <div style="font-size:2.5rem; font-family:var(--font-serif); font-weight:900; color:#D4A017;">1 in 7</div>
+            <div style="font-size:.85rem; color:var(--text-soft); margin-top:6px; line-height:1.5;">children in Mecklenburg County face food insecurity</div>
+          </div>
+          <div style="background:#FCE4EC; border-radius:var(--radius-md); padding:28px 20px; text-align:center; grid-column:1/-1;">
+            <div style="font-size:.85rem; color:var(--text-soft); line-height:1.6;">Growing your own food — even in a single pot — can provide <strong style="color:var(--text-dark);">meaningful nutrition</strong> and build lifelong healthy habits in children.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /page-home -->
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE: GROW YOUR OWN
+═══════════════════════════════════════════ -->
+<div id="page-grow" class="page">
+
+  <div class="grow-hero">
+    <div class="locator-hero-inner">
+      <h1>🌿 Grow Your Own</h1>
+      <p>Easy guides for growing fresh food at home — even in a small space. Perfect for beginners and kids!</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="section-inner">
+
+      <!-- Kids Corner -->
+      <div class="kids-corner">
+        <div class="kids-corner-badge">⭐ Kid's Corner</div>
+        <h2>How Does a Plant Grow?</h2>
+        <p>Learning about plants is the first step to growing your own food! Click each stage below to learn what's happening underground — and above it!</p>
+
+        <div class="lifecycle" id="lifecycle">
+          <div class="lifecycle-stage active" onclick="setStage(0)" data-stage="0">
+            <span class="stage-emoji">🫘</span>
+            <div class="stage-name">The Seed</div>
+          </div>
+          <div class="lifecycle-arrow">→</div>
+          <div class="lifecycle-stage" onclick="setStage(1)" data-stage="1">
+            <span class="stage-emoji">💧</span>
+            <div class="stage-name">Watering</div>
+          </div>
+          <div class="lifecycle-arrow">→</div>
+          <div class="lifecycle-stage" onclick="setStage(2)" data-stage="2">
+            <span class="stage-emoji">🌱</span>
+            <div class="stage-name">Sprouting</div>
+          </div>
+          <div class="lifecycle-arrow">→</div>
+          <div class="lifecycle-stage" onclick="setStage(3)" data-stage="3">
+            <span class="stage-emoji">🌿</span>
+            <div class="stage-name">Growing</div>
+          </div>
+          <div class="lifecycle-arrow">→</div>
+          <div class="lifecycle-stage" onclick="setStage(4)" data-stage="4">
+            <span class="stage-emoji">☀️</span>
+            <div class="stage-name">Flowering</div>
+          </div>
+          <div class="lifecycle-arrow">→</div>
+          <div class="lifecycle-stage" onclick="setStage(5)" data-stage="5">
+            <span class="stage-emoji">🍅</span>
+            <div class="stage-name">Harvest!</div>
+          </div>
+        </div>
+
+        <div class="stage-detail" id="stageDetail">
+          <h3 id="stageTitle">🫘 The Seed</h3>
+          <p id="stageBody">A seed is like a tiny sleeping baby plant! Inside each seed is everything it needs to start growing. It's just waiting for warmth, water, and soil to wake it up. When you plant a seed, you're starting an amazing journey!</p>
+        </div>
+      </div>
+
+      <!-- Growing Guides -->
+      <div class="section-header">
+        <div class="section-label">Step-by-step guides</div>
+        <h2 class="section-title">Pick a crop, start growing</h2>
+        <p class="section-sub">Each guide is written for beginners. All three crops can be grown in containers — perfect if you don't have a yard.</p>
+      </div>
+
+      <div class="grow-grid" id="growGrid">
+        <!-- Injected by JS -->
+      </div>
+
+    </div>
+  </section>
+</div><!-- /page-grow -->
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE: FIND FOOD
+═══════════════════════════════════════════ -->
+<div id="page-find" class="page">
+
+  <div class="locator-hero">
+    <div class="locator-hero-inner">
+      <h1>🗺 Find Food Near You</h1>
+      <p>Every resource below is free to use. No one should go hungry. Find the nearest food bank, pantry, or mobile distribution in Charlotte, NC.</p>
+      <div class="search-bar">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" placeholder="Search by name, neighborhood, or zip…" oninput="filterResources()" />
+        <button class="search-btn" onclick="filterResources()">Search</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filter chips -->
+  <div class="filter-row">
+    <button class="filter-chip active" onclick="setFilter('ALL', this)">All Types</button>
+    <button class="filter-chip" onclick="setFilter('FOOD_BANK', this)">🏦 Food Banks</button>
+    <button class="filter-chip" onclick="setFilter('PANTRY', this)">🛒 Pantries</button>
+    <button class="filter-chip" onclick="setFilter('MOBILE_PANTRY', this)">🚐 Mobile</button>
+    <button class="filter-chip" onclick="setFilter('NUTRITION_CENTER', this)">🥗 Nutrition Centers</button>
+    <button class="filter-chip" onclick="setFilter('KIDS', this)">👶 Serves Kids</button>
+  </div>
+
+  <!-- Results count -->
+  <div style="max-width:1100px; margin:16px auto 0; padding:0 24px;">
+    <p id="resultsCount" style="font-size:.875rem; color:var(--text-soft);"></p>
+  </div>
+
+  <!-- Resource cards -->
+  <div class="resource-grid" id="resourceGrid">
+    <!-- Injected by JS -->
+  </div>
+
+</div><!-- /page-find -->
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE: ABOUT US — Group London
+═══════════════════════════════════════════ -->
+<div id="page-about" class="page">
+
+  <!-- Hero -->
+  <div class="about-hero">
+    <div class="about-hero-inner">
+      <div class="hero-eyebrow" style="margin-bottom:16px;">
+        <span>🌻</span> PAL Jayden's Group · Emerging Leaders Program
+      </div>
+      <h1>Meet Group London</h1>
+      <p>We're a group of young leaders from Charlotte who built this platform to shine a light on food insecurity — and help our community do something about it.</p>
+    </div>
+  </div>
+
+  <!-- ── Group photo + intro card ───────────────── -->
+  <div style="padding: 0 24px;">
+    <div class="about-intro-card">
+
+      <!-- Left: group photo -->
+      <div class="about-photo-frame">
+        <!--
+          ──────────────────────────────────────────────
+          TO ADD YOUR GROUP PHOTO:
+          Replace the placeholder block below with:
+          <img src="your-photo.jpg" alt="Group London" />
+          ──────────────────────────────────────────────
+        -->
+        <div class="about-photo-placeholder">
+          <span class="ph-emoji">📸</span>
+          <p>Add your group photo here — replace this block with an &lt;img&gt; tag</p>
+        </div>
+        <div class="about-photo-caption">Group London — Charlotte, NC</div>
+      </div>
+
+      <!-- Right: who we are -->
+      <div class="about-intro-text">
+        <span class="team-badge">👋 Who We Are</span>
+        <h2>We are Group London — and this is our project.</h2>
+        <p>
+          We're a team of students in <strong>PAL Jayden's group</strong>, participating in the <strong>Emerging Leaders program</strong> at our university. We came together around one shared belief: that where you live should never decide whether you eat well.
+        </p>
+        <p>
+          Charlotte has real food deserts — neighborhoods where families, especially young children, struggle to find fresh and affordable food. We built RootSprout to <strong>raise awareness of this issue</strong> and give our community real tools to take action.
+        </p>
+        <p>
+          This site is our Emerging Leaders project, but more than that, it's our commitment to the city we call home.
+        </p>
+        <div class="about-program-pills">
+          <span class="about-program-pill">🎓 Emerging Leaders Program</span>
+          <span class="about-program-pill">👥 PAL Jayden's Group</span>
+          <span class="about-program-pill">🏙️ Charlotte, NC</span>
+          <span class="about-program-pill">🌱 Group London</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── Mission quote ─────────────────────────── -->
+  <div class="about-quote-banner" style="padding: 0 24px;">
+    <div class="about-quote-inner">
+      <div class="about-quote-mark">"</div>
+      <div class="about-quote-text">
+        We didn't build this website to get a grade. We built it because <em>real kids in our city</em> go to bed hungry — and we think that's something worth fighting for.
+        <div style="font-size:.85rem; font-weight:500; color:rgba(251,247,240,.55); margin-top:12px; font-family:var(--font-sans);">
+          — Group London, Emerging Leaders Program
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Why we made this ──────────────────────── -->
+  <section class="section" style="background: var(--white); padding-bottom: 16px;">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-label">Our purpose</div>
+        <h2 class="section-title">Why we created RootSprout</h2>
+        <p class="section-sub">Three goals guided every decision we made when building this platform.</p>
+      </div>
+      <div class="about-values">
+        <div class="about-value-card">
+          <span class="val-icon">📢</span>
+          <div class="val-title">Spread awareness</div>
+          <div class="val-body">Most people don't realize how many families right here in Charlotte lack access to healthy food. We want to change that — starting with this website.</div>
+        </div>
+        <div class="about-value-card">
+          <span class="val-icon">🗺️</span>
+          <div class="val-title">Connect families to help</div>
+          <div class="val-body">Awareness isn't enough. We built the Food Locator so that any parent in Charlotte can find a food bank or pantry near them in seconds — no searching required.</div>
+        </div>
+        <div class="about-value-card">
+          <span class="val-icon">🌱</span>
+          <div class="val-title">Teach long-term solutions</div>
+          <div class="val-body">The Grow Your Own hub teaches families and kids how to grow their own food at home — a skill that lasts a lifetime and doesn't depend on a pantry being nearby.</div>
+        </div>
+        <div class="about-value-card">
+          <span class="val-icon">💡</span>
+          <div class="val-title">Lead by example</div>
+          <div class="val-body">As Emerging Leaders, we believe young people have a responsibility to use what we learn to make a real difference. This project is us putting that belief into action.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Stats row ─────────────────────────────── -->
+  <div style="padding: 0 24px;">
+    <div class="about-stats-row">
+      <div class="about-stat-card">
+        <div class="stat-num">7+</div>
+        <div class="stat-lbl">Local food resources listed across Charlotte, NC</div>
+      </div>
+      <div class="about-stat-card">
+        <div class="stat-num">3</div>
+        <div class="stat-lbl">Step-by-step growing guides built for beginners and kids</div>
+      </div>
+      <div class="about-stat-card">
+        <div class="stat-num">1 in 7</div>
+        <div class="stat-lbl">Children in Mecklenburg County face food insecurity — that's why we're here</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CTA strip ──────────────────────────────── -->
+  <div class="mission-strip" style="flex-direction: column; gap: 16px; padding: 40px 24px; text-align: center;">
+    <p style="font-family: var(--font-serif); font-size: 1.5rem; font-weight: 800; color: #fff; max-width: 480px; line-height: 1.3;">
+      Explore what we built.
+    </p>
+    <div style="display: flex; gap: 14px; flex-wrap: wrap; justify-content: center;">
+      <button class="btn-secondary" onclick="showPage('grow')">🌿 Grow Your Own</button>
+      <button class="btn-primary" style="background:rgba(255,255,255,.15); border: 1.5px solid rgba(255,255,255,.4); box-shadow:none;" onclick="showPage('find')">
+        🗺 Find Local Food
+      </button>
+    </div>
+  </div>
+
+</div><!-- /page-about -->
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════ -->
+<footer>
+  <div class="footer-logo">🌱 RootSprout</div>
+  <p>A University Leadership Initiative addressing food insecurity and early childhood nutrition in Charlotte, NC.</p>
+  <p>Focused on the communities that need it most — from food deserts to front porches.</p>
+  <div class="footer-note">
+    Resource information is kept as up-to-date as possible. Always call ahead to confirm hours. © 2025 RootSprout Initiative.
+  </div>
+</footer>
+
+
+<script>
+// ═══════════════════════════════════════════════════
+// DATA — In production these come from /api/food-resources
+// and /api/grow-modules via fetch(). Embedded here for demo.
+// ═══════════════════════════════════════════════════
+
+const FOOD_RESOURCES = [
+  {
+    id: 1, name: "Loaves & Fishes",
+    resourceType: "FOOD_BANK",
+    address: "700 Spratt St, Charlotte, NC 28206",
+    phone: "(704) 523-4333",
+    website: "https://www.loavesandfishescharlotte.org",
+    description: "The largest emergency food assistance organization in the Charlotte region, operating multiple pantries across Mecklenburg County.",
+    eligibilityNotes: "Open to any Charlotte-area resident in need. No income verification required.",
+    idRequired: false,
+    servesChildren: true,
+    acceptsDonations: true,
+    donationTypes: "Non-perishable foods, hygiene products",
+    servesNeighborhoods: "Uptown, NoDa, Villa Heights",
+    operatingHours: [
+      { dayOfWeek: "MON", openTime: "09:00", closeTime: "16:00" },
+      { dayOfWeek: "TUE", openTime: "09:00", closeTime: "16:00" },
+      { dayOfWeek: "WED", openTime: "09:00", closeTime: "16:00" },
+      { dayOfWeek: "THU", openTime: "09:00", closeTime: "16:00" },
+      { dayOfWeek: "FRI", openTime: "09:00", closeTime: "16:00" },
+    ]
+  },
+  {
+    id: 2, name: "Second Harvest Food Bank of Metrolina",
+    resourceType: "FOOD_BANK",
+    address: "500 Spratt St, Charlotte, NC 28206",
+    phone: "(704) 376-1796",
+    website: "https://www.secondharvestmetrolina.org",
+    description: "One of the largest food banks in the Southeast, distributing millions of pounds of food annually to families across the Charlotte metro area.",
+    eligibilityNotes: "Works through partner agencies. Visit their website to find the nearest distribution point.",
+    idRequired: false,
+    servesChildren: true,
+    acceptsDonations: true,
+    donationTypes: "Non-perishables, fresh produce, protein items",
+    servesNeighborhoods: "Charlotte Metro, surrounding counties",
+    operatingHours: [
+      { dayOfWeek: "MON", openTime: "08:00", closeTime: "17:00" },
+      { dayOfWeek: "TUE", openTime: "08:00", closeTime: "17:00" },
+      { dayOfWeek: "WED", openTime: "08:00", closeTime: "17:00" },
+      { dayOfWeek: "THU", openTime: "08:00", closeTime: "17:00" },
+      { dayOfWeek: "FRI", openTime: "08:00", closeTime: "17:00" },
+    ]
+  },
+  {
+    id: 3, name: "Charlotte Mecklenburg Food Policy Council",
+    resourceType: "NUTRITION_CENTER",
+    address: "600 E 4th St, Charlotte, NC 28202",
+    phone: "(704) 336-2040",
+    website: "https://charlottenc.gov",
+    description: "Connects residents to food access programs, SNAP enrollment assistance, and WIC resources through city-run nutrition support programs.",
+    eligibilityNotes: "SNAP/WIC eligibility required for some programs. Walk-ins welcome for referrals.",
+    idRequired: true,
+    servesChildren: true,
+    acceptsDonations: false,
+    donationTypes: null,
+    servesNeighborhoods: "All Charlotte neighborhoods",
+    operatingHours: [
+      { dayOfWeek: "MON", openTime: "08:30", closeTime: "17:00" },
+      { dayOfWeek: "TUE", openTime: "08:30", closeTime: "17:00" },
+      { dayOfWeek: "WED", openTime: "08:30", closeTime: "17:00" },
+      { dayOfWeek: "THU", openTime: "08:30", closeTime: "17:00" },
+      { dayOfWeek: "FRI", openTime: "08:30", closeTime: "17:00" },
+    ]
+  },
+  {
+    id: 4, name: "Friendship Missionary Baptist Church Pantry",
+    resourceType: "PANTRY",
+    address: "3400 Beatties Ford Rd, Charlotte, NC 28216",
+    phone: "(704) 394-3655",
+    website: "https://friendshipcharlotte.org",
+    description: "A community-run food pantry serving families in the West Charlotte and Beatties Ford corridor — one of Charlotte's most under-resourced food desert areas.",
+    eligibilityNotes: "Open to all families in need. No documentation required.",
+    idRequired: false,
+    servesChildren: true,
+    acceptsDonations: true,
+    donationTypes: "Canned goods, baby food, diapers, hygiene",
+    servesNeighborhoods: "West Charlotte, Beatties Ford, Ashley Park",
+    operatingHours: [
+      { dayOfWeek: "TUE", openTime: "10:00", closeTime: "13:00" },
+      { dayOfWeek: "SAT", openTime: "09:00", closeTime: "12:00" },
+    ]
+  },
+  {
+    id: 5, name: "Urban Ministry Center",
+    resourceType: "NUTRITION_CENTER",
+    address: "945 N College St, Charlotte, NC 28206",
+    phone: "(704) 347-0278",
+    website: "https://urbanministrycenter.org",
+    description: "Provides meals, groceries, and wraparound support services for families and individuals experiencing hardship in Charlotte.",
+    eligibilityNotes: "No eligibility requirements for food. All are welcome.",
+    idRequired: false,
+    servesChildren: true,
+    acceptsDonations: true,
+    donationTypes: "Prepared meals, canned goods, clothing",
+    servesNeighborhoods: "Uptown, Optimist Park, Belmont",
+    operatingHours: [
+      { dayOfWeek: "MON", openTime: "07:30", closeTime: "16:00" },
+      { dayOfWeek: "TUE", openTime: "07:30", closeTime: "16:00" },
+      { dayOfWeek: "WED", openTime: "07:30", closeTime: "16:00" },
+      { dayOfWeek: "THU", openTime: "07:30", closeTime: "16:00" },
+      { dayOfWeek: "FRI", openTime: "07:30", closeTime: "16:00" },
+      { dayOfWeek: "SAT", openTime: "08:00", closeTime: "12:00" },
+    ]
+  },
+  {
+    id: 6, name: "Crisis Assistance Ministry",
+    resourceType: "PANTRY",
+    address: "500 Spratt St, Charlotte, NC 28206",
+    phone: "(704) 371-3001",
+    website: "https://crisisassistance.org",
+    description: "Offers emergency food boxes, utility assistance, and clothing for families in Mecklenburg County facing a sudden crisis.",
+    eligibilityNotes: "Must be a Mecklenburg County resident. Some programs require income verification.",
+    idRequired: true,
+    servesChildren: true,
+    acceptsDonations: true,
+    donationTypes: "Non-perishables, household goods, clothing",
+    servesNeighborhoods: "All Mecklenburg County",
+    operatingHours: [
+      { dayOfWeek: "MON", openTime: "09:00", closeTime: "16:30" },
+      { dayOfWeek: "TUE", openTime: "09:00", closeTime: "16:30" },
+      { dayOfWeek: "WED", openTime: "09:00", closeTime: "16:30" },
+      { dayOfWeek: "THU", openTime: "09:00", closeTime: "16:30" },
+      { dayOfWeek: "FRI", openTime: "09:00", closeTime: "16:30" },
+    ]
+  },
+  {
+    id: 7, name: "Roof Above Mobile Meals",
+    resourceType: "MOBILE_PANTRY",
+    address: "1027 W 1st St (dispatch location), Charlotte, NC 28202",
+    phone: "(704) 373-0297",
+    website: "https://roofabove.org",
+    description: "Mobile meal distribution reaching food-insecure families across Charlotte neighborhoods that lack access to traditional food pantries.",
+    eligibilityNotes: "No eligibility requirements. Routes posted on website and social media.",
+    idRequired: false,
+    servesChildren: true,
+    acceptsDonations: false,
+    donationTypes: null,
+    servesNeighborhoods: "Enderly Park, Grier Heights, Hidden Valley, Statesville Ave",
+    operatingHours: [
+      { dayOfWeek: "MON", openTime: "11:00", closeTime: "14:00", notes: "Route varies — check website" },
+      { dayOfWeek: "WED", openTime: "11:00", closeTime: "14:00", notes: "Route varies — check website" },
+      { dayOfWeek: "FRI", openTime: "11:00", closeTime: "14:00", notes: "Route varies — check website" },
+    ]
+  },
+];
+
+const GROW_MODULES = [
+  {
+    id: 1, title: "Grow Cherry Tomatoes", cropName: "Cherry Tomato",
+    difficulty: "EASY", daysToHarvest: 65, containerOk: true,
+    sunNeeds: "Full sun (6–8 hrs/day)", waterNeeds: "2–3x per week",
+    isKidsCorner: true, emoji: "🍅",
+    description: "Cherry tomatoes are one of the easiest and most rewarding crops to grow at home — even in a small pot on a porch.",
+    steps: [
+      { stepNumber: 1, title: "Fill your container", iconEmoji: "🪣", body: "Choose a pot at least 12 inches deep. Fill it with potting mix, leaving 2 inches from the top.", tipForKids: "Think of the pot as the tomato's bed — it needs to be big enough to stretch out!" },
+      { stepNumber: 2, title: "Plant your seedling", iconEmoji: "🌱", body: "Dig a small hole and place your seedling inside. Cover the roots gently with soil and press down lightly.", tipForKids: "Tuck the seedling in like you're tucking a friend in for a nap." },
+      { stepNumber: 3, title: "Water & wait", iconEmoji: "💧", body: "Water until liquid drains from the bottom. Keep the soil moist — not soggy. Check it every day!", tipForKids: "Plants get thirsty too! Check the soil each morning before school." },
+      { stepNumber: 4, title: "Add a stake", iconEmoji: "🪵", body: "As the plant grows taller, tie it gently to a wooden stake so it doesn't fall over.", tipForKids: "The stake is like a little walking stick that keeps the plant standing up tall." },
+      { stepNumber: 5, title: "Harvest time!", iconEmoji: "🍅", body: "When tomatoes are fully red and feel firm but slightly soft, they're ready! Gently twist and pull.", tipForKids: "It's like picking candy — except healthier and YOU grew it!" },
+    ]
+  },
+  {
+    id: 2, title: "Grow Green Beans", cropName: "Green Bean",
+    difficulty: "EASY", daysToHarvest: 55, containerOk: true,
+    sunNeeds: "Full sun (6+ hrs/day)", waterNeeds: "1 inch per week",
+    isKidsCorner: true, emoji: "🫘",
+    description: "Green beans grow fast, produce abundantly, and can thrive in containers — making them perfect for small spaces.",
+    steps: [
+      { stepNumber: 1, title: "Soak your seeds", iconEmoji: "🫘", body: "Place seeds in a small bowl of water overnight. This helps them sprout faster.", tipForKids: "The seeds are waking up! They need a drink before they start their big journey." },
+      { stepNumber: 2, title: "Plant 1 inch deep", iconEmoji: "✏️", body: "Push each seed about 1 inch into moist soil, spaced 3 inches apart.", tipForKids: "Use your finger like a pencil to poke the perfect hole!" },
+      { stepNumber: 3, title: "Watch them sprout", iconEmoji: "🔍", body: "In 5–10 days you'll see tiny green sprouts push through the soil!", tipForKids: "Check every morning — it's like a surprise is coming up from underground!" },
+      { stepNumber: 4, title: "Keep weeds away", iconEmoji: "🧹", body: "Pull out any weeds growing nearby so they don't steal water from your beans.", tipForKids: "Weeds are the sneaky bullies of the garden. Pull them out to protect your beans!" },
+      { stepNumber: 5, title: "Pick when 4–6 inches", iconEmoji: "📏", body: "Harvest beans when they're 4–6 inches long and snap cleanly when bent.", tipForKids: "If it snaps with a crisp sound, it's ready to eat!" },
+    ]
+  },
+  {
+    id: 3, title: "Grow Fresh Basil", cropName: "Basil",
+    difficulty: "EASY", daysToHarvest: 30, containerOk: true,
+    sunNeeds: "Full sun (6+ hrs/day)", waterNeeds: "When top inch dries out",
+    isKidsCorner: false, emoji: "🌿",
+    description: "Basil is one of the fastest herbs to grow and adds incredible flavor to home cooking. Perfect on a sunny windowsill.",
+    steps: [
+      { stepNumber: 1, title: "Start with a small pot", iconEmoji: "🪴", body: "A 6-inch pot works great. Use well-draining potting mix and place it in your sunniest window.", tipForKids: "Basil loves the sun just like you might love a warm, sunny day!" },
+      { stepNumber: 2, title: "Sprinkle seeds on top", iconEmoji: "✨", body: "Scatter a pinch of seeds on the soil surface and lightly press them down. Don't bury them deep.", tipForKids: "Basil seeds are so small! Be very gentle — they're like tiny sleeping babies." },
+      { stepNumber: 3, title: "Mist with water", iconEmoji: "🌫️", body: "Use a spray bottle to keep the soil lightly moist until seeds sprout (about 5–7 days).", tipForKids: "A gentle mist is like a soft little rain shower for your seeds!" },
+      { stepNumber: 4, title: "Pinch off flowers", iconEmoji: "✂️", body: "If flower buds appear, pinch them off. This keeps the leaves flavorful and encourages more growth.", tipForKids: "This sounds mean, but it actually helps the plant make more yummy leaves!" },
+      { stepNumber: 5, title: "Harvest leaves", iconEmoji: "🌿", body: "Pick leaves from the top down. Always leave at least 2 pairs of leaves on the stem so it keeps growing.", tipForKids: "Smell your fingers after picking basil — it smells amazing!" },
+    ]
+  },
+];
+
+const LIFECYCLE_STAGES = [
+  { title: "🫘 The Seed", body: "A seed is like a tiny sleeping baby plant! Inside each seed is everything it needs to start growing. It's just waiting for warmth, water, and soil to wake it up. When you plant a seed, you're starting an amazing journey!" },
+  { title: "💧 Watering", body: "When you add water to the soil, the seed wakes up! Water travels into the seed and triggers it to start growing. Too much water can drown it, too little and it stays asleep. Getting the balance right is your first gardening superpower!" },
+  { title: "🌱 Sprouting", body: "The seed has cracked open and a tiny root is pushing down, while a tiny shoot pushes UP through the soil. This is called germination. You'll see a little green bump push through the dirt — that's your plant saying hello! 🎉" },
+  { title: "🌿 Growing", body: "Now your plant starts making leaves! Leaves are like solar panels — they capture sunlight and turn it into food for the plant. This is called photosynthesis. The more sun your plant gets, the bigger and stronger it grows." },
+  { title: "☀️ Flowering", body: "Flowers aren't just pretty — they're how the plant makes fruit! Bees and butterflies visit flowers and carry pollen from one flower to another. This is called pollination, and it's what tells the plant to start making your food!" },
+  { title: "🍅 Harvest!", body: "The fruit is finally ready to pick! All that watering, sunlight, and care paid off. When you pick a tomato, bean, or herb that YOU grew, it tastes extra delicious because you know exactly how much love went into it. 🌟" },
+];
+
+// ═══════════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════════
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  const link = document.getElementById('nav-' + page);
+  if (link) link.classList.add('active');
+  // Close mobile nav
+  document.getElementById('navLinks').classList.remove('open');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Lazy-render pages on first visit
+  if (page === 'find') renderResources(FOOD_RESOURCES);
+  if (page === 'grow') renderGrowModules();
+
+  return false;
+}
+
+function toggleMobileNav() {
+  document.getElementById('navLinks').classList.toggle('open');
+}
+
+// ═══════════════════════════════════════════════════
+// FOOD RESOURCE UTILITIES
+// ═══════════════════════════════════════════════════
+const TYPE_LABELS = {
+  FOOD_BANK: "Food Bank",
+  PANTRY: "Food Pantry",
+  MOBILE_PANTRY: "Mobile Pantry",
+  COMMUNITY_FRIDGE: "Community Fridge",
+  NUTRITION_CENTER: "Nutrition Center",
+};
+const TYPE_BADGE_CLASS = {
+  FOOD_BANK: "badge-food-bank",
+  PANTRY: "badge-pantry",
+  MOBILE_PANTRY: "badge-mobile",
+  COMMUNITY_FRIDGE: "badge-community",
+  NUTRITION_CENTER: "badge-nutrition",
+};
+const DAY_LABELS = { MON:"Mon", TUE:"Tue", WED:"Wed", THU:"Thu", FRI:"Fri", SAT:"Sat", SUN:"Sun" };
+
+function formatTime(t) {
+  const [h, m] = t.split(':').map(Number);
+  const p = h >= 12 ? 'PM' : 'AM';
+  return `${h % 12 || 12}:${m.toString().padStart(2,'0')} ${p}`;
+}
+
+function buildResourceCard(r) {
+  const hoursHtml = r.operatingHours.slice(0, 5).map(h => `
+    <div class="hours-row">
+      <span class="day">${DAY_LABELS[h.dayOfWeek]}</span>
+      <span class="time">${formatTime(h.openTime)} – ${formatTime(h.closeTime)}</span>
+    </div>
+    ${h.notes ? `<div class="hours-note">${h.notes}</div>` : ''}
+  `).join('');
+
+  const pills = [];
+  if (!r.idRequired) pills.push(`<span class="info-pill">No ID required</span>`);
+  if (r.idRequired)  pills.push(`<span class="info-pill warn">⚠ ID required</span>`);
+  if (r.acceptsDonations) pills.push(`<span class="info-pill">Accepts donations</span>`);
+  if (r.servesNeighborhoods) pills.push(`<span class="info-pill">📍 ${r.servesNeighborhoods}</span>`);
+
+  return `
+    <div class="resource-card">
+      <div class="resource-card-header">
+        <span class="resource-type-badge ${TYPE_BADGE_CLASS[r.resourceType]}">${TYPE_LABELS[r.resourceType]}</span>
+      </div>
+      <div class="resource-card-body">
+        <div class="resource-name">${r.name}</div>
+        <div class="resource-address">
+          <span>📍</span>
+          <span>${r.address}</span>
+        </div>
+        <p class="resource-desc">${r.description}</p>
+        ${r.eligibilityNotes ? `<p style="font-size:.8rem;color:var(--text-soft);font-style:italic;margin-bottom:8px;">ℹ️ ${r.eligibilityNotes}</p>` : ''}
+        <div class="hours-section">
+          <div class="hours-label">Hours</div>
+          <div class="hours-list">${hoursHtml}</div>
+        </div>
+        <div class="info-pills">${pills.join('')}</div>
+      </div>
+      <div class="resource-card-footer">
+        ${r.phone ? `<a href="tel:${r.phone}" class="rc-link-btn phone">📞 ${r.phone}</a>` : ''}
+        ${r.website ? `<a href="${r.website}" target="_blank" rel="noopener" class="rc-link-btn web">🌐 Website</a>` : ''}
+        ${r.servesChildren ? `<span class="kids-serves-badge">👶 Serves Families</span>` : ''}
+      </div>
+    </div>
+  `;
+}
+
+// ═══════════════════════════════════════════════════
+// FILTER STATE
+// ═══════════════════════════════════════════════════
+let activeFilter = 'ALL';
+
+function setFilter(type, btn) {
+  activeFilter = type;
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  filterResources();
+}
+
+function filterResources() {
+  const q = (document.getElementById('searchInput')?.value || '').toLowerCase();
+  let filtered = FOOD_RESOURCES;
+
+  if (activeFilter === 'KIDS') {
+    filtered = filtered.filter(r => r.servesChildren);
+  } else if (activeFilter !== 'ALL') {
+    filtered = filtered.filter(r => r.resourceType === activeFilter);
+  }
+
+  if (q) {
+    filtered = filtered.filter(r =>
+      r.name.toLowerCase().includes(q) ||
+      r.description.toLowerCase().includes(q) ||
+      (r.servesNeighborhoods || '').toLowerCase().includes(q) ||
+      r.address.toLowerCase().includes(q)
+    );
+  }
+
+  renderResources(filtered);
+}
+
+function renderResources(list) {
+  const grid = document.getElementById('resourceGrid');
+  const count = document.getElementById('resultsCount');
+  if (!grid) return;
+
+  count.textContent = `Showing ${list.length} resource${list.length !== 1 ? 's' : ''} in Charlotte, NC`;
+
+  if (list.length === 0) {
+    grid.innerHTML = `
+      <div class="empty-state" style="grid-column:1/-1">
+        <div class="icon">🔍</div>
+        <h3>No resources found</h3>
+        <p>Try a different search term or remove a filter.</p>
+      </div>`;
+    return;
+  }
+  grid.innerHTML = list.map(buildResourceCard).join('');
+}
+
+// ═══════════════════════════════════════════════════
+// GROW MODULES
+// ═══════════════════════════════════════════════════
+function renderGrowModules() {
+  const grid = document.getElementById('growGrid');
+  if (!grid || grid.dataset.rendered) return;
+  grid.dataset.rendered = 'true';
+
+  grid.innerHTML = GROW_MODULES.map(m => `
+    <div class="grow-card">
+      <div class="grow-card-thumb">${m.emoji}</div>
+      <div class="grow-card-body">
+        <div class="grow-card-meta">
+          <span class="diff-badge diff-${m.difficulty.toLowerCase()}">${m.difficulty}</span>
+          ${m.containerOk ? `<span class="container-badge">🪴 Container-friendly</span>` : ''}
+          ${m.isKidsCorner ? `<span style="font-size:.72rem;background:#FFF8E1;color:#7B5800;padding:3px 9px;border-radius:40px;font-weight:600;">⭐ Kids Pick</span>` : ''}
+        </div>
+        <div class="grow-card-name">${m.cropName}</div>
+        <p class="grow-card-desc">${m.description}</p>
+        <div class="grow-card-stats">
+          <div class="grow-card-stat">⏱ <strong>${m.daysToHarvest} days</strong> to harvest</div>
+          <div class="grow-card-stat">☀️ <strong>${m.sunNeeds.split(' ')[0]}</strong></div>
+        </div>
+        <button class="view-steps-btn" onclick="toggleSteps(${m.id}, this)">
+          View Growing Steps ▾
+        </button>
+        <div class="steps-container" id="steps-${m.id}">
+          <div class="steps-list">
+            ${m.steps.map(s => `
+              <div class="step-item">
+                <div class="step-num">${s.stepNumber}</div>
+                <div class="step-content">
+                  <div class="step-title">${s.iconEmoji || ''} ${s.title}</div>
+                  <div class="step-body">${s.body}</div>
+                  ${s.tipForKids ? `<div class="step-kids-tip">${s.tipForKids}</div>` : ''}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleSteps(id, btn) {
+  const container = document.getElementById('steps-' + id);
+  const isOpen = container.classList.toggle('open');
+  btn.textContent = isOpen ? 'Hide Steps ▴' : 'View Growing Steps ▾';
+}
+
+// ═══════════════════════════════════════════════════
+// LIFECYCLE STAGES
+// ═══════════════════════════════════════════════════
+function setStage(idx) {
+  document.querySelectorAll('.lifecycle-stage').forEach((s, i) => {
+    s.classList.toggle('active', i === idx);
+  });
+  document.getElementById('stageTitle').textContent = LIFECYCLE_STAGES[idx].title;
+  document.getElementById('stageBody').textContent  = LIFECYCLE_STAGES[idx].body;
+}
+
+// ═══════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  // Pre-render find page so search works immediately
+  renderResources(FOOD_RESOURCES);
+});
+</script>
+</body>
+</html>

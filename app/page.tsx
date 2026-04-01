@@ -1,65 +1,130 @@
-import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="animate-in">
+      {/* Hero */}
+      <section className="hero">
+        <div className="hero-bg">
+          <div className="hero-blob hero-blob-1"></div>
+          <div className="hero-blob hero-blob-2"></div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <div className="hero-content">
+          <div className="hero-text">
+            <div className="hero-eyebrow animate-in">
+              <span>🌱</span> Charlotte, NC Community Initiative
+            </div>
+            <h1 className="hero-title animate-in delay-1">
+              Every child deserves to <span className="accent">grow</span> and be <span className="accent">nourished.</span>
+            </h1>
+            <p className="hero-desc animate-in delay-2">
+              RootSprout helps Charlotte families access fresh food resources and learn to grow their own produce, right in their own homes and communities.
+            </p>
+            <div className="hero-actions animate-in delay-3">
+              <Link href="/grow" className="btn-primary">
+                🌿 Start Growing
+              </Link>
+              <Link href="/find-food" className="btn-secondary">
+                🗺 Find Local Food
+              </Link>
+            </div>
+          </div>
+          <div className="hero-visual animate-in delay-4">
+            <div className="hero-illustration">
+              <span className="plant-emoji">🌻</span>
+              <p style={{ color: "rgba(255,255,255,.7)", fontSize: ".85rem", textAlign: "center", marginBottom: "16px" }}>
+                Serving families across Charlotte, NC
+              </p>
+              <div className="hero-stats">
+                <div className="hero-stat">
+                  <div className="num">7+</div>
+                  <div className="lbl">Food Resources Listed</div>
+                </div>
+                <div className="hero-stat">
+                  <div className="num">3</div>
+                  <div className="lbl">Growing Guides</div>
+                </div>
+                <div className="hero-stat">
+                  <div className="num">Free</div>
+                  <div className="lbl">Always & Forever</div>
+                </div>
+                <div className="hero-stat">
+                  <div className="num">CLT</div>
+                  <div className="lbl">Charlotte-Focused</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </main>
+      </section>
+
+      {/* Mission strip */}
+      <div className="mission-strip">
+        <div className="mission-item"><span>🥦</span> Fight food insecurity</div>
+        <div className="mission-item"><span>👩‍🌾</span> Teach kids to grow food</div>
+        <div className="mission-item"><span>🤝</span> Connect families to help</div>
+        <div className="mission-item"><span>🏙️</span> Strengthen Charlotte communities</div>
+      </div>
+
+      {/* CTA cards section */}
+      <section className="section" style={{ background: "var(--white)" }}>
+        <div className="section-inner">
+          <div className="section-header">
+            <div className="section-label">Two paths, one mission</div>
+            <h2 className="section-title">Where would you like to start?</h2>
+            <p className="section-sub">Whether you need food now or want to learn to grow your own, we've got you covered.</p>
+          </div>
+          <div className="cta-grid">
+            <Link href="/grow" className="cta-card cta-card-grow">
+              <span className="card-icon">🌿</span>
+              <div className="card-title">Grow Your Own Food</div>
+              <p className="card-desc">Step-by-step guides for growing tomatoes, beans, and herbs — even in a small pot on your porch. Includes a special kid-friendly learning section!</p>
+              <div className="card-btn">Start Learning →</div>
+              <div className="bg-deco">🌱</div>
+            </Link>
+            <Link href="/find-food" className="cta-card cta-card-find">
+              <span className="card-icon">🏪</span>
+              <div className="card-title">Find Food Near You</div>
+              <p className="card-desc">Browse food banks, pantries, and mobile food resources right here in Charlotte, NC. No judgment. No barriers. Just help when you need it.</p>
+              <div className="card-btn">Find Resources →</div>
+              <div className="bg-deco">🥕</div>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* About / Why section */}
+      <section className="section">
+        <div className="section-inner">
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "60px", alignItems: "center" }}>
+            <div>
+              <div className="section-label">Why it matters</div>
+              <h2 className="section-title">Charlotte has food deserts. We're helping change that.</h2>
+              <p style={{ color: "var(--text-mid)", lineHeight: "1.8", marginBottom: "16px", fontSize: "1rem" }}>
+                A food desert is a neighborhood where it's hard to find affordable, healthy food nearby. Many families in Charlotte, especially in the west and north corridors, live more than a mile from a grocery store.
+              </p>
+              <p style={{ color: "var(--text-mid)", lineHeight: "1.8", fontSize: "1rem" }}>
+                RootSprout bridges two gaps at once: teaching families to <strong>grow their own food</strong> and making it easy to <strong>find immediate help</strong> when they need it most.
+              </p>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+              <div style={{ background: "var(--sky)", borderRadius: "var(--radius-md)", padding: "28px 20px", textAlign: "center" }}>
+                <div style={{ fontSize: "2.5rem", fontFamily: "var(--font-serif)", fontWeight: "900", color: "var(--leaf)" }}>23%</div>
+                <div style={{ fontSize: ".85rem", color: "var(--text-soft)", marginTop: "6px", lineHeight: "1.5" }}>of Charlotte residents live in low-income, low-access food areas</div>
+              </div>
+              <div style={{ background: "#FFF8E1", borderRadius: "var(--radius-md)", padding: "28px 20px", textAlign: "center" }}>
+                <div style={{ fontSize: "2.5rem", fontFamily: "var(--font-serif)", fontWeight: "900", color: "#D4A017" }}>1 in 7</div>
+                <div style={{ fontSize: ".85rem", color: "var(--text-soft)", marginTop: "6px", lineHeight: "1.5" }}>children in Mecklenburg County face food insecurity</div>
+              </div>
+              <div style={{ background: "#FCE4EC", borderRadius: "var(--radius-md)", padding: "28px 20px", textAlign: "center", gridColumn: "1/-1" }}>
+                <div style={{ fontSize: ".85rem", color: "var(--text-soft)", lineHeight: "1.6" }}>
+                  Growing your own food. even in a single pot, can provide <strong style={{ color: "var(--text-dark)" }}>meaningful nutrition</strong> and build lifelong healthy habits in children.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

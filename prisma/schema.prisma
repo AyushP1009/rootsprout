@@ -1,0 +1,89 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model FoodResource {
+  id                Int              @id @default(autoincrement())
+  name              String           
+  slug              String           @unique 
+  resourceType      String           
+  address           String
+  city              String           @default("Charlotte")
+  state             String           @default("NC")
+  zip               String
+  latitude          Float?
+  longitude         Float?
+  phone             String?
+  email             String?
+  website           String?
+  description       String?
+  eligibilityNotes  String?          
+  idRequired        Boolean          @default(false)
+  servesChildren    Boolean          @default(true)  
+  servesNeighborhoods String?
+  acceptsDonations  Boolean          @default(false)
+  donationTypes     String?
+  isActive          Boolean          @default(true)
+  lastVerified      DateTime?
+  imageUrl          String?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  operatingHours    OperatingHours[]
+
+  @@index([zip])
+  @@index([resourceType])
+  @@index([servesChildren])
+}
+
+model OperatingHours {
+  id             Int          @id @default(autoincrement())
+  foodResourceId Int
+  foodResource   FoodResource @relation(fields: [foodResourceId], references: [id], onDelete: Cascade)
+  dayOfWeek      String       
+  openTime       String       
+  closeTime      String       
+  notes          String?
+
+  @@index([foodResourceId])
+}
+
+model GrowModule {
+  id           Int          @id @default(autoincrement())
+  title        String
+  slug         String       @unique
+  cropName     String       
+  difficulty   String       
+  daysToHarvest Int?
+  sunNeeds     String?      
+  waterNeeds   String?      
+  containerOk  Boolean      @default(false)
+  description  String?
+  coverImage   String?
+  isKidsCorner Boolean      @default(false)  
+  sortOrder    Int          @default(0)
+  isActive     Boolean      @default(true)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  steps        GrowStep[]
+}
+
+model GrowStep {
+  id           Int        @id @default(autoincrement())
+  growModuleId Int
+  growModule   GrowModule @relation(fields: [growModuleId], references: [id], onDelete: Cascade)
+  stepNumber   Int
+  title        String
+  body         String     
+  iconEmoji    String?
+  imageUrl     String?
+  tipForKids   String?
+
+  @@index([growModuleId])
+}
