@@ -18,7 +18,7 @@ export default function Home() {
               Every child deserves to <span className="accent">grow</span> and be <span className="accent">nourished.</span>
             </h1>
             <p className="hero-desc animate-in delay-2">
-              Little Green Thumbs helps Charlotte families access fresh food resources and learn to grow their own produce, right in their own homes and communities.
+              Plant 2 Plate helps Charlotte families access fresh food resources and learn to grow their own produce, right in their own homes and communities.
             </p>
             <div className="hero-actions animate-in delay-3">
               <Link href="/grow" className="btn-primary">

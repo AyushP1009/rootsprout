@@ -16,7 +16,7 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Little Green Thumbs — Grow & Nourish Charlotte",
+  title: "Plant 2 Plate — Grow & Nourish Charlotte",
   description: "A university leadership initiative addressing food insecurity in Charlotte, NC.",
 };
 
@@ -31,7 +31,7 @@ export default function RootLayout({
         {/* Navigation Bar */}
         <nav className="nav">
           <Link href="/" className="nav-logo">
-            <span>🌱</span> Little Green Thumbs
+            <span>🌱</span> Plant 2 Plate
           </Link>
           <div className="nav-links-wrap" id="navLinks">
             <ul className="nav-links">
@@ -51,10 +51,10 @@ export default function RootLayout({
 
         {/* Footer */}
         <footer>
-          <div className="footer-logo">🌱 Little Green Thumbs</div>
+          <div className="footer-logo">🌱 Plant 2 Plate</div>
           <p>UNC Charlotte emerging leaders service learning project.</p>
           <div className="footer-note">
-            Resource information is kept as up-to-date as possible. © 2026 Little Green Thumbs Initiative.
+            Resource information is kept as up-to-date as possible. © 2026 Plant 2 Plate Initiative.
           </div>
         </footer>
       </body>
