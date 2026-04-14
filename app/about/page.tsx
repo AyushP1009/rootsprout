@@ -36,7 +36,7 @@ export default function AboutPage() {
               We're a team of students in <strong>PAL Jayden's group</strong>, participating in the <strong>Emerging Leaders program</strong> at UNC Charlotte. We came together around one shared belief: that where you live should never decide whether you eat well.
             </p>
             <p>
-              Charlotte has real food deserts, neighborhoods where families, especially young children, struggle to find fresh and affordable food. We built Little Green Thumbs to <strong>raise awareness of this issue</strong> and give our community real tools to take action.
+              Charlotte has real food deserts, neighborhoods where families, especially young children, struggle to find fresh and affordable food. We built Plant 2 Plate to <strong>raise awareness of this issue</strong> and give our community real tools to take action.
             </p>
             <p>
               This site is our Emerging Leaders project, but more than that, it's our commitment to the city we call home.
@@ -70,7 +70,7 @@ export default function AboutPage() {
         <div className="section-inner">
           <div className="section-header">
             <div className="section-label">Our purpose</div>
-            <h2 className="section-title">Why we created Little Green Thumbs</h2>
+            <h2 className="section-title">Why we created Plant 2 Plate Thumbs</h2>
             <p className="section-sub">Three goals guided every decision we made when building this platform.</p>
           </div>
           <div className="about-values">
