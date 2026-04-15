@@ -70,7 +70,7 @@ export default function AboutPage() {
         <div className="section-inner">
           <div className="section-header">
             <div className="section-label">Our purpose</div>
-            <h2 className="section-title">Why we created Plant 2 Plate Thumbs</h2>
+            <h2 className="section-title">Why we created Plant 2 Plate</h2>
             <p className="section-sub">Three goals guided every decision we made when building this platform.</p>
           </div>
           <div className="about-values">
